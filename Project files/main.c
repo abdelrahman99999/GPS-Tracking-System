@@ -5,6 +5,9 @@
 #include "LCD.h"
 
 #define PI   3.14159265358979323846
+#define RED       0x02
+#define BLUE      0x04
+#define GREEN     0x08
 
 void Led_Init (void)
 {
@@ -19,6 +22,13 @@ void Led_Init (void)
     GPIO_PORTF_PCTL_R &= ~0x0000FFF0; // GPIO clear bit PCTL
     GPIO_PORTF_DATA_R &= ~0x0E; // initialize them to be off
 }
+
+void led_on(unsigned char color){
+if(color==0x02){GPIO_PORTF_DATA_R=RED;}
+else if(color==0x04){GPIO_PORTF_DATA_R=BLUE;}
+else{GPIO_PORTF_DATA_R=GREEN;}
+}
+
 // Function to convert degrees to radii
  long double Radians(long double degree)
 {

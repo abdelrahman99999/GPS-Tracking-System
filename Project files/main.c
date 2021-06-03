@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <math.h> 
 #include "tm4c123gh6pm.h"
+#include "LCD.h"
+
 #define PI   3.14159265358979323846
+
 void Led_Init (void)
 {
     SYSCTL_RCGCGPIO_R |= 0x20; // enable portF clock

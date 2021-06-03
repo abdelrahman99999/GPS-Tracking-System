@@ -41,3 +41,42 @@ void delay_micro(int n){
     for(i=0;i<n;i++)
         for(j=0;j<3;j++){}
 }
+
+void LCD_init(void) {
+
+    SYSCTL_RCGCGPIO_R = 0x03; 		// Enable port A and port B clocks
+    while ((SYSCTL_PRGPIO_R & 0x03) == 0) {};
+
+    //we will use PA7,PA6,PA5 as digital output
+    GPIO_PORTA_LOCK_R = 0x4C4F434B;
+    GPIO_PORTA_CR_R = 0xE0;
+    GPIO_PORTA_AFSEL_R = 0;
+    GPIO_PORTA_PCTL_R = 0;
+    GPIO_PORTA_AMSEL_R = 0;
+    GPIO_PORTA_DIR_R |= 0xE0; 		//PORT A controls RS,E and R/W
+    GPIO_PORTA_DEN_R |= 0xE0;
+
+    //we will use all pins of portB as digital output 
+    GPIO_PORTB_LOCK_R = 0x4C4F434B;
+    GPIO_PORTB_CR_R = 0xFF;
+    GPIO_PORTB_AFSEL_R = 0;
+    GPIO_PORTB_PCTL_R = 0;
+    GPIO_PORTB_AMSEL_R = 0;
+    GPIO_PORTB_DIR_R |= 0xFF; 		//PORTB D0-D7
+    GPIO_PORTB_DEN_R |= 0xFF; 		//PORTB D0-D7
+
+    LCD_Cmd(LCD_config);
+    LCD_Cmd(autoIncrement);
+    LCD_Cmd(TurnOnDisplay);
+    LCD_Cmd(CLEAR);
+}
+
+// function to print a char
+void LCD_printC(unsigned char data) {
+    GPIO_PORTA_DATA_R = 0x20; 		//RS=1, E=0,RW=0
+    GPIO_PORTB_DATA_R = data;
+    GPIO_PORTA_DATA_R |= 0x80;		//E=1
+    delay_micro(0);
+    GPIO_PORTA_DATA_R = 0x00;		//E=0
+    delay_micro(0);
+}

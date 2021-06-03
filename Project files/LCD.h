@@ -29,11 +29,13 @@ where
 #define autoIncrement 0x06  	//auto increment cursor(shift cursor to right) 
 #define f1_line 0x80  			//cursor at begining of 1st line
 #define s2_line 0xC0  			//cursor at begining of 2nd line
+//milliseconds delay
 void delay_milli(int n){
     int i,j;
     for(i=0;i<n;i++)
         for(j=0;j<3180;j++){}
 }
+//microseconds delay
 void delay_micro(int n){
     int i,j;
     for(i=0;i<n;i++)

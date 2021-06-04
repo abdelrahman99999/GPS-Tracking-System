@@ -4,16 +4,14 @@
 #include "tm4c123gh6pm.h"
 #include "LCD.h"
 #include "Led.h"
-
 #define PI   3.14159265358979323846
-
 // Function to convert degrees to radii
  long double Radians(long double degree)
 {
      long double onedeg = (PI) / 180;
      return (onedeg * degree);
 }
-  long double distance(long double new_lat,long double new_long,long double old_lat,long double old_long)
+  long double Total_distance(long double new_lat,long double new_long,long double old_lat,long double old_long,long double current_distance)
 {
 // Converting latitude and longitude from the degree system to the radial system
      new_lat = Radians(new_lat);
@@ -29,10 +27,8 @@
      long double R = 6371000;
 // Calculate the result
 	ans = ans * R;
-        return ans;
+// updated distance
+        current_distance = ans + current_distance;
+	return current_distance;
 }
 
-int main(){
-
-
-}

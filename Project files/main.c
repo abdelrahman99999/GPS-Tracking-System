@@ -1,9 +1,10 @@
-#include "stdint.h"
+#include <stdint.h>
 #include <stdio.h>
 #include <math.h> 
 #include "tm4c123gh6pm.h"
 #include "LCD.h"
 #include "Led.h"
+
 #define PI   3.14159265358979323846
 
 // Function to convert degrees to radii

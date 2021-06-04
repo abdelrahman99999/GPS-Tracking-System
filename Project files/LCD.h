@@ -122,3 +122,19 @@ void LCD_printS(char *s){
         delay_milliseconds(20);
     }
 }
+
+//for testing
+/*
+int main(){
+LCD_init();
+while(1){
+        LCD_Cmd(CLEAR);
+        LCD_Cmd(f1_line);
+        LCD_printS("distance =");
+        LCD_Cmd(s2_line);
+        delay_milliseconds(20);
+        LCD_printInt(255);
+        delay_milliseconds(500);
+        }
+}
+*/

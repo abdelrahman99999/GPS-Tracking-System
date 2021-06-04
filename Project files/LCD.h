@@ -21,6 +21,7 @@ where
 //headers used
 #include "tm4c123gh6pm.h"
 #include <stdint.h>
+#include <string.h> 
 
 //LCD macros for lcd commands
 #define CLEAR 0x01  			//clear display screen
@@ -30,19 +31,21 @@ where
 #define f1_line 0x80  			//cursor at begining of 1st line
 #define s2_line 0xC0  			//cursor at begining of 2nd line
 
-//milliseconds delay
+//functions 
+//(1)function for delay milliseconds
 void delay_milliseconds(int n){
     int i,j;
     for(i=0;i<n;i++)
         for(j=0;j<3180;j++){}
 }
-//microseconds delay
+//(2) function for delay microseconds
 void delay_microseconds(int n){
     int i,j;
     for(i=0;i<n;i++)
         for(j=0;j<3;j++){}
 }
 
+//(3)function for lcd commands
 void LCD_Cmd(unsigned char command){
     GPIO_PORTA_DATA_R = 0x00; 		//RS =0, E=0, RW=0
     GPIO_PORTB_DATA_R = command;
@@ -54,6 +57,7 @@ void LCD_Cmd(unsigned char command){
 	else {delay_microseconds(37);}
 }
 
+//(4)function for lcd intitalization depending on specific pins 
 void LCD_init(void) {
 
     SYSCTL_RCGCGPIO_R = 0x03; 		// Enable port A and port B clocks
@@ -83,7 +87,7 @@ void LCD_init(void) {
     LCD_Cmd(CLEAR);
 }
 
-// function to print a char
+//(5)function for printing one character on lcd display 
 void LCD_printC(unsigned char data) {
     GPIO_PORTA_DATA_R = 0x20; 		//RS=1, E=0,RW=0
     GPIO_PORTB_DATA_R = data;
@@ -91,4 +95,30 @@ void LCD_printC(unsigned char data) {
     delay_microseconds(0);
     GPIO_PORTA_DATA_R = 0x00;		//E=0
     delay_microseconds(0);
+}
+
+//(6)function for printing integer on lcd display 
+//Integer must be between 0-255
+void LCD_printInt(uint8_t num){
+	uint8_t i=0,arr[20];
+	uint8_t temp=num;
+	for(i=0 ; num!=0 ; i++){
+		arr[i]=temp%10;
+		num=num/10;
+		temp=num;
+	}
+	for(;i!=0;--i){
+		LCD_printC(arr[i-1]+48);
+		 delay_milliseconds(20);
+	}	
+};
+
+//(7)function for printing one word on lcd display 
+void LCD_printS(char *s){
+    int i;
+	int Size = strlen(s);
+    for(i=0;i<Size;i++){
+        LCD_printC(s[i]);
+        delay_milliseconds(20);
+    }
 }

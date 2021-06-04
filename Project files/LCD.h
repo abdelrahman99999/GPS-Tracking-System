@@ -1,4 +1,4 @@
-//description for lcd pins 
+//description for lcd pins used 
 /*
 port A -> used in lcd Control
 where 
@@ -29,17 +29,29 @@ where
 #define autoIncrement 0x06  	//auto increment cursor(shift cursor to right) 
 #define f1_line 0x80  			//cursor at begining of 1st line
 #define s2_line 0xC0  			//cursor at begining of 2nd line
+
 //milliseconds delay
-void delay_milli(int n){
+void delay_milliseconds(int n){
     int i,j;
     for(i=0;i<n;i++)
         for(j=0;j<3180;j++){}
 }
 //microseconds delay
-void delay_micro(int n){
+void delay_microseconds(int n){
     int i,j;
     for(i=0;i<n;i++)
         for(j=0;j<3;j++){}
+}
+
+void LCD_Cmd(unsigned char command){
+    GPIO_PORTA_DATA_R = 0x00; 		//RS =0, E=0, RW=0
+    GPIO_PORTB_DATA_R = command;
+    GPIO_PORTA_DATA_R |=0x80; 		//E=1
+    delay_microseconds(0);
+    GPIO_PORTA_DATA_R = 0x00; 		//E=0
+    if(command < 4){    //as (clear display command) and (return cursor home command)
+	      delay_milliseconds(2);} 
+	else {delay_microseconds(37);}
 }
 
 void LCD_init(void) {
@@ -76,7 +88,7 @@ void LCD_printC(unsigned char data) {
     GPIO_PORTA_DATA_R = 0x20; 		//RS=1, E=0,RW=0
     GPIO_PORTB_DATA_R = data;
     GPIO_PORTA_DATA_R |= 0x80;		//E=1
-    delay_micro(0);
+    delay_microseconds(0);
     GPIO_PORTA_DATA_R = 0x00;		//E=0
-    delay_micro(0);
+    delay_microseconds(0);
 }

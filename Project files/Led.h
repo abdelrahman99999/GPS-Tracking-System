@@ -1,8 +1,10 @@
-#include "stdint.h"
+#include <stdint.h>
 #include "tm4c123gh6pm.h"
+
 #define RED       0x02
 #define BLUE      0x04
 #define GREEN     0x08
+
 // function(1) to initialze PortF Leds:
 void Led_Init (void)
 {
@@ -17,7 +19,8 @@ void Led_Init (void)
     GPIO_PORTF_PCTL_R &= ~0x0000FFF0; // GPIO clear bit PCTL
     GPIO_PORTF_DATA_R &= ~0x0E; // initialize them to be off
 }
-//function to power on specific built in led color of led 
+
+//function(2) to power on specific built-in led depending on color of led 
 void led_on(unsigned char color){
 if(color==0x02){GPIO_PORTF_DATA_R=RED;}  
 else if(color==0x04){GPIO_PORTF_DATA_R=BLUE;}

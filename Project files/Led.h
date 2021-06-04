@@ -27,3 +27,10 @@ else if(color==0x04){GPIO_PORTF_DATA_R=BLUE;}
 else if(color==0x08){GPIO_PORTF_DATA_R=GREEN;} 
 else{GPIO_PORTF_DATA_R = 0;}
 }
+
+// turn on red LED if distance reaches 100m
+void turnOnReach100(long double dist){
+    if (dist >= 100){
+        led_on(RED);
+    }
+}

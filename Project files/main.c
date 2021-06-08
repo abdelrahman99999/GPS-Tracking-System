@@ -19,7 +19,7 @@ int index = 0;
 const char comma[2] = ",";
 // Wait for new input
 // then return ASCII code
-//Is the incoming data $GPRMC?
+//Then test if the incoming data $GPRMC?
 	uint8_t UART_InChar(void); {
 		while ((UART2_FR_R & 0x0010) != 0);
 		return((uint8_t)(UART2_DR_R & 0xFF));
@@ -108,25 +108,21 @@ long double Total_distance(long double new_lat,long double new_long,long double 
 	return current_distance;
 }
 int main(){
-// testing distance	
+// testing distance and led 	
 old_lat =  new_lat;
 old_long = new_long;
 new_lat = latitude;
 new_long = longitude;
-int x = 0;
+int x ;
 	x = Total_distance(new_lat,new_long,old_lat,old_long,current_distance);
-	printf ("%lf" , x )';
-}
-//Then LOOP
 //testing led
-int main(){
 
   LCD_init();
   Led_Init();
   LCD_Cmd(CLEAR);
 
-  int distance=100;
-
+  int distance = x;
+	
   turnOnReach100(distance);
 
   LCD_Cmd(f1_line);
@@ -136,3 +132,4 @@ int main(){
   delay_milliseconds(15);
   LCD_printInt(distance);
 }
+	//Then LOOP

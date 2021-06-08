@@ -14,7 +14,7 @@
 void SystemInit(){}
 	
 char GPSValues[100], *parseValue[20], *token;
-double latitude, longitude;
+long double latitude, longitude;
 int index = 0;
 const char comma[2] = ",";
 // Wait for new input
@@ -60,14 +60,14 @@ const char comma[2] = ",";
 									return((uint8_t)(UART2_DR_R & 0xFF));
 									char c7;
 									c7 = UART2_DR_R;
-									//Assigning data to GPSValues ​​array
+									//Assigning data to GPSValues array
 									while (c7 != '*') {
 										GPSValues[index] = c7;
 										while ((UART2_FR_R & 0x0010) != 0);
 										return((uint8_t)(UART2_DR_R & 0xFF));
 										index++;
 									}
-									//Separating data in GPSValues ​​array by comma
+									//Separating data in GPSValues array by comma
 									index = 0;
 									token = strtok(GPSValues, comma);
 									while (token != NULL) {
@@ -106,13 +106,19 @@ long double Total_distance(long double new_lat,long double new_long,long double 
 // updated distance
         current_distance = ans + current_distance;
 	return current_distance;
+}
+int main(){
+// testing distance	
 old_lat =  new_lat;
 old_long = new_long;
 new_lat = latitude;
 new_long = longitude;
+int x = 0;
+	x = Total_distance(new_lat,new_long,old_lat,old_long,current_distance);
+	printf ("%lf" , x )';
 }
-
-//testing
+//Then LOOP
+//testing led
 int main(){
 
   LCD_init();

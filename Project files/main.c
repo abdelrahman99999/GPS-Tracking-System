@@ -7,6 +7,7 @@
 #include "tm4c123gh6pm.h"
 #include "LCD.h"
 #include "Led.h"
+#include "distance.h"
 
 //macros
 #define PI   3.14159265358979323846
@@ -15,11 +16,12 @@ void SystemInit(){}
 int main(){	
 char GPSValues[100], *parseValue[20], *token;
 long double latitude, longitude;
-int index = 0;
+int index ;
 const char comma[2] = ",";
 // Wait for new input
 // then return ASCII code
 //Then test if the incoming data $GPRMC?
+	while (1);{
 	uint8_t UART_InChar(void); {
 		while ((UART2_FR_R & 0x0010) != 0);
 		return((uint8_t)(UART2_DR_R & 0xFF));
@@ -62,6 +64,7 @@ const char comma[2] = ",";
 									c7 = UART2_DR_R;
 									//Assigning data to GPSValues array
 									while (c7 != '*') {
+										index = 0;
 										GPSValues[index] = c7;
 										while ((UART2_FR_R & 0x0010) != 0);
 										return((uint8_t)(UART2_DR_R & 0xFF));
@@ -87,7 +90,12 @@ const char comma[2] = ",";
 //long double new_long = longitude;
 //long double current_distance = current _distance
 //int x ;
-//	x = Total_distance(new_lat,new_long,old_lat,old_long,current_distance);
+///if ( old_lat = Null | old_long = Null | current_distance = Null );{
+//old_lat = latitude;
+//old_long = longitude;
+//current_distnce = 0 ;
+//}
+//x = Total_distance(new_lat,new_long,old_lat,old_long,current_distance);
 //testing led
 
 //LCD_init();
@@ -101,33 +109,8 @@ const char comma[2] = ",";
 //LCD_Cmd(s2_line);
 //delay_milliseconds(15);
 //LCD_printInt(distance);
+	}
 }
 //Then LOOP
 
-// Function to convert degrees to radii
- long double Radians(long double degree){
-     long double onedeg = (PI) / 180;
-     return (onedeg * degree);
-}
-
-//  Function to calculate distance 
-long double Total_distance(long double new_lat,long double new_long,long double old_lat,long double old_long,long double current_distance){
-// Converting latitude and longitude from the degree system to the radial system
-     new_lat = Radians(new_lat);
-     new_long = Radians(new_long);
-     old_lat = Radians(old_lat);
-     old_long = Radians(old_long);
-// Haversine formula
-     long double deltalong = new_long - old_long;
-     long double deltalat = new_lat - old_lat;
-     long double ans = pow(sin(deltalat / 2), 2) + cos(new_lat) * cos(old_lat) * pow(sin(deltalong / 2), 2);
-     ans = 2 * asin(sqrt(ans));
-// Earth's radius in metres
-     long double R = 6371000;
-// Calculate the result
-	ans = ans * R;
-// updated distance
-        current_distance = ans + current_distance;
-	return (current_distance);
-}
 

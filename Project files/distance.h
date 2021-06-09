@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 
+//macros
+#define PI   3.14159265358979323846
+
 // Function to convert degrees to radii
  long double Radians(long double degree){
      long double onedeg = (PI) / 180;

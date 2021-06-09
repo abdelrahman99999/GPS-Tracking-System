@@ -12,7 +12,7 @@
 #define PI   3.14159265358979323846
 
 void SystemInit(){}
-	
+int main(){	
 char GPSValues[100], *parseValue[20], *token;
 long double latitude, longitude;
 int index = 0;
@@ -80,6 +80,29 @@ const char comma[2] = ",";
 										latitude = atof(parseValue[2]);
 										longitude = atof(parseValue[4]);
 									}}}}}}}}}
+// testing distance and led 	
+//long double old_lat =  new_lat;
+//long double old_long = new_long;
+//long double new_lat = latitude;
+//long double new_long = longitude;
+//long double current_distance = current _distance
+//int x ;
+//	x = Total_distance(new_lat,new_long,old_lat,old_long,current_distance);
+//testing led
+
+//LCD_init();
+//Led_Init();
+//LCD_Cmd(CLEAR);
+//int distance = x;
+//turnOnReach100(distance);
+//LCD_Cmd(f1_line);
+//LCD_printS("distance :");
+//delay_milliseconds(15);
+//LCD_Cmd(s2_line);
+//delay_milliseconds(15);
+//LCD_printInt(distance);
+}
+//Then LOOP
 
 // Function to convert degrees to radii
  long double Radians(long double degree){
@@ -105,31 +128,6 @@ long double Total_distance(long double new_lat,long double new_long,long double 
 	ans = ans * R;
 // updated distance
         current_distance = ans + current_distance;
-	return current_distance;
+	return (current_distance);
 }
-int main(){
-// testing distance and led 	
-old_lat =  new_lat;
-old_long = new_long;
-new_lat = latitude;
-new_long = longitude;
-int x ;
-	x = Total_distance(new_lat,new_long,old_lat,old_long,current_distance);
-//testing led
 
-  LCD_init();
-  Led_Init();
-  LCD_Cmd(CLEAR);
-
-  int distance = x;
-	
-  turnOnReach100(distance);
-
-  LCD_Cmd(f1_line);
-  LCD_printS("distance :");
-  delay_milliseconds(15);
-  LCD_Cmd(s2_line);
-  delay_milliseconds(15);
-  LCD_printInt(distance);
-}
-	//Then LOOP

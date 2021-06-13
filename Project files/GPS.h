@@ -59,6 +59,17 @@ GPIO_PORTD_PCTL_R =0x11000000;         //
 GPIO_PORTD_DEN_R = 0xC0; 
 GPIO_PORTD_AMSEL_R = 0x0;
 }
+
+// Wait for new input,
+// then return ASCII code
+char UART_InChar(void) {
+while((UART2_FR_R&0x0010) != 0);
+// wait until RXFE is 0
+return((UART2_DR_R&0xFF));
+
+}
+
+
 // A function to extract Latitude or Longitude coordinates of NMEA sentence from GPS
 float getCoordinate(char data[], uint8_t coordinateIndex) {
 

@@ -35,7 +35,30 @@ long double Total_distance(long double new_lat,long double new_long,long double 
 	return (current_distance);
 }
 
+void UART_Init(void){
+	
+SYSCTL_RCGCUART_R |= 0x0004; // activate UART2       0 0 0 0 0 1 0 0  (8uart)
+SYSCTL_RCGCGPIO_R |= 0x0008; // activate port D          0 0 1 0 0 0   
 
+UART2_CTL_R &= ~0x0001; // disable UART
+
+UART2_IBRD_R = 104;
+
+UART2_FBRD_R = 11;
+
+UART2_LCRH_R = 0x0070;   //1 stop bit(stp2=0),fifo enable(fen=1),8 bit(wlen= 1 1 )    0 1 1 1 0 0 0 0 
+
+UART2_CTL_R = 0x0301;  // enable uart,hse=0,tx=1,rx=1
+
+GPIO_PORTD_LOCK_R = 0x4C4F434B; 
+GPIO_PORTD_CR_R |= 0xC0;              //PD6,PD7
+
+GPIO_PORTD_AFSEL_R = 0xC0;             //enable alternative function for  PD6,PD7
+
+GPIO_PORTD_PCTL_R =0x11000000;         //
+GPIO_PORTD_DEN_R = 0xC0; 
+GPIO_PORTD_AMSEL_R = 0x0;
+}
 // A function to extract Latitude or Longitude coordinates of NMEA sentence from GPS
 float getCoordinate(char data[], uint8_t coordinateIndex) {
 

@@ -13,7 +13,7 @@ int main(){
 	
 	Led_Init();
 	LCD_init();
-	// *UART init*
+	UART_Init();
 	
 	while(1){
 		
@@ -22,7 +22,7 @@ int main(){
 		
 		// receive data from GPS
 		for (int i=0;i<100;i++){
-			c[i] = UART_inChar();
+			c[i] = UART_InChar();
 		}
 
 		float latitude, longitude;
@@ -30,7 +30,11 @@ int main(){
 		longitude = getCoordinate(data, LONGITUDE );
 		
 		// update distance
-		total_distance += Total_distance(latitude,longitude, , ,total_distance);
+		total_distance += Total_distance(latitude,longitude,total_distance);
+		
+		LCD_printS("Distance: " + total_distance);
+		delay_milliseconds(1000);
+		LCD_Cmd(CLEAR);
 
 	}
 }

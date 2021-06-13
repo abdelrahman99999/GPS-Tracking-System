@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 
 //macros
 #define PI   3.14159265358979323846
 #define NMEA_RMC "$GPRMC"
+#define LATITUDE 2
+#define LONGITUDE 4
 
 // Function to convert degrees to radii
  long double Radians(long double degree){

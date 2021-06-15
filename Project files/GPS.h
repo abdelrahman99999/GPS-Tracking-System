@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-
+#include <string.h>
+#include <stdint.h>
+#include "tm4c123gh6pm.h"
 //macros
 #define PI   3.14159265358979323846
 #define NMEA_RMC "$GPRMC"

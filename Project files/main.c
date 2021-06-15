@@ -21,7 +21,6 @@ int degrees, T_distance = 0;
 int main(){
 
         UART_Init();
-        UART_InChar();
         LCD_init();
         Led_Init();
 

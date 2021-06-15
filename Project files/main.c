@@ -24,8 +24,6 @@ int main(){
         LCD_init();
         Led_Init();
 
-
-        //storing data in an array
 while (T_distance <= 100) {
             delay_milliseconds(1000);
         int i;
@@ -33,7 +31,7 @@ while (T_distance <= 100) {
         for (i = 0; i < 70; i++) {
                 GPS_values[i] = UART_InChar();
         }
-
+//////////////////////////////////////////
 
          latitude = getCoordinate(GPS_values, LATITUDE);
          longitude = getCoordinate(GPS_values, LONGITUDE);

@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include "tm4c123gh6pm.h"
+#include "mapView.h"
 
 #define RED       0x02
 #define BLUE      0x04
@@ -29,8 +30,10 @@ else{GPIO_PORTF_DATA_R = 0;}
 }
 
 // turn on red LED if distance reaches 100m
-void turnOnReach100(int dist) {
+void turnOnReach100(int dist, long double lat, long double lng) {
     if (dist > 100) {
         led_on(RED);
+        // to display end point location on Google Maps
+        viewOnMap(lat,lng);
     }
 }

@@ -24,55 +24,56 @@ int main(){
         LCD_init();
         Led_Init();
 
-while (T_distance <= 100) {
-            delay_milliseconds(1000);
-        int i;
+        while (T_distance <= 100) {
+                delay_milliseconds(1000);
+                int i;
 
-        for (i = 0; i < 70; i++) {
-                GPS_values[i] = UART_InChar();
-        }
-//////////////////////////////////////////
+                for (i = 0; i < 70; i++) {
+                        GPS_values[i] = UART_InChar();
+                }
 
-         latitude = getCoordinate(GPS_values, LATITUDE);
-         longitude = getCoordinate(GPS_values, LONGITUDE);
+                 latitude = getCoordinate(GPS_values, LATITUDE);
+                 longitude = getCoordinate(GPS_values, LONGITUDE);
 
-        //latitude calculation
-        degrees = latitude / 100;
-        minutes = latitude - (double)(degrees * 100);
-        seconds = minutes / 60.00;
-        new_lat = degrees + seconds;
+                //latitude calculation
+                degrees = latitude / 100;
+                minutes = latitude - (double)(degrees * 100);
+                seconds = minutes / 60.00;
+                new_lat = degrees + seconds;
 
-        //longitude calculation
-        degrees = longitude / 100;
-        minutes = longitude - (double)(degrees * 100);
-        seconds = minutes / 60.00;
-        new_long = degrees + seconds;
+                //longitude calculation
+                degrees = longitude / 100;
+                minutes = longitude - (double)(degrees * 100);
+                seconds = minutes / 60.00;
+                new_long = degrees + seconds;
 
-        // calculate distance and update values
+                // calculate distance and update values
 
-        if (old_lat == 0 || old_long == 0) {    //for first time
-            old_lat = new_lat;
-            old_long = new_long;
-        }
-        else {
-            T_distance = Total_distance(new_lat, new_long, old_lat, old_long, current_distance);
-            old_lat = new_lat;
-            old_long = new_long;
+                if (old_lat == 0 || old_long == 0) {    //for first time
+                    old_lat = new_lat;
+                    old_long = new_long;
+                }
+                else {
+                    T_distance = Total_distance(new_lat, new_long, old_lat, old_long, current_distance);
+                    old_lat = new_lat;
+                    old_long = new_long;
 
-            //print total distance
-            LCD_Cmd(CLEAR);
-            delay_milliseconds(10);
-            LCD_Cmd(f1_line);
-            delay_milliseconds(10);
-            LCD_printS("distance = ");
-            delay_milliseconds(10);
-            LCD_Cmd(s2_line);
-            delay_milliseconds(10);
-            LCD_printInt(T_distance);
-        }
+                    //print total distance
+                    LCD_Cmd(CLEAR);
+                    delay_milliseconds(10);
+                    LCD_Cmd(f1_line);
+                    delay_milliseconds(10);
+                    LCD_printS("distance = ");
+                    delay_milliseconds(10);
+                    LCD_Cmd(s2_line);
+                    delay_milliseconds(10);
+                    LCD_printInt(T_distance);
+                }
 
-    }
-    turnOnReach100(T_distance);
+            }
+        
+        // turn on the red led & view location on Maps
+        turnOnReach100(T_distance,old_lat, old_long);
 
     return(0);
 }
